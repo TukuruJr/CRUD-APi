@@ -24,8 +24,17 @@ def Detailed_Request(request, key):  # pass the id as parameter
 
 
 @api_view(['POST'])
-def Create(request):  #
+def Create(request):
     serializer = PostSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def Update(request, key):
+    post = Post.objects.get(id=key)  # get only post with the given id
+    serializer = PostSerializer(instance=post, data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
