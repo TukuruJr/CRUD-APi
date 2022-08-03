@@ -28,7 +28,7 @@ def Create(request):
     serializer = PostSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-    return Response(serializer.data)
+    return HttpResponse("Data Post Success")
 
 
 @api_view(['POST'])
