@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view  # for decorating function based views
 from rest_framework.response import Response
@@ -23,5 +24,14 @@ def Detailed_Request(request, key):  # pass the id as parameter
 
 
 @api_view(['POST'])
-def Post_Request(request):
-    pass
+def Create(request):  #
+    serializer = PostSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def Delete(request, key):  # pass the id as parameter
+    post = Post.objects.get(id=key)  # get only post with the given id
+    post.delete()
