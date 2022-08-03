@@ -15,7 +15,13 @@ def Get_Request(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def Detailed_Request(request, key):  # pass the id as parameter
+    post = Post.objects.get(id=key)  # get only post with the given id
+    serializer = PostSerializer(post, many=False)
+    return Response(serializer.data)
+
+
 @api_view(['POST'])
 def Post_Request(request):
     pass
-
